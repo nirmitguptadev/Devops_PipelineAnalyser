@@ -3,7 +3,7 @@
     "url": "http://host.docker.internal:8080",
     "user": "23FE10CSE00802",
     "token": "118b89e58d19dabe4a3484255a720e12dd",
-    "poll_interval": 30,
+    "poll_interval": 10,
     "enabled": true
   }
 }
