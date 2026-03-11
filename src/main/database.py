@@ -1,0 +1,124 @@
+import sqlite3
+import json
+from datetime import datetime
+from typing import Dict, List
+
+class Database:
+    def __init__(self, db_path='pipeline_analyzer.db'):
+        self.db_path = db_path
+        self._init_db()
+
+    def _init_db(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS failures (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pipeline_name TEXT NOT NULL,
+                timestamp TEXT NOT NULL,
+                category TEXT NOT NULL,
+                root_cause TEXT,
+                severity TEXT,
+                error_lines TEXT,
+                recommendations TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        conn.commit()
+        conn.close()
+
+    def save_analysis(self, result: Dict):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            INSERT INTO failures (pipeline_name, timestamp, category, root_cause, 
+                                severity, error_lines, recommendations)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            result['pipeline_name'],
+            result['timestamp'],
+            result['category'],
+            result['root_cause'],
+            result['severity'],
+            json.dumps(result['error_lines']),
+            json.dumps(result['recommendations'])
+        ))
+        
+        conn.commit()
+        conn.close()
+
+    def get_recent_failures(self, limit: int = 50) -> List[Dict]:
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM failures 
+            ORDER BY created_at DESC 
+            LIMIT ?
+        ''', (limit,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        return [dict(row) for row in rows]
+
+    def is_build_analyzed(self, pipeline_name: str, build_number: int) -> bool:
+        """Check if a build has already been analyzed"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT COUNT(*) FROM failures 
+            WHERE pipeline_name LIKE ? AND timestamp > datetime('now', '-7 days')
+        ''', (f"{pipeline_name}#{build_number}%",))
+        
+        count = cursor.fetchone()[0]
+        conn.close()
+        
+        return count > 0
+
+    def get_statistics(self) -> Dict:
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT COUNT(*) FROM failures')
+        total = cursor.fetchone()[0]
+        
+        cursor.execute('''
+            SELECT category, COUNT(*) as count 
+            FROM failures 
+            GROUP BY category
+        ''')
+        by_category = dict(cursor.fetchall())
+        
+        cursor.execute('''
+            SELECT severity, COUNT(*) as count 
+            FROM failures 
+            GROUP BY severity
+        ''')
+        by_severity = dict(cursor.fetchall())
+        
+        # Get weekly trend
+        cursor.execute('''
+            SELECT 
+                date(created_at) as day,
+                COUNT(*) as count
+            FROM failures
+            WHERE created_at > datetime('now', '-7 days')
+            GROUP BY date(created_at)
+            ORDER BY day
+        ''')
+        weekly_trend = dict(cursor.fetchall())
+        
+        conn.close()
+        
+        return {
+            'total_failures': total,
+            'by_category': by_category,
+            'by_severity': by_severity,
+            'weekly_trend': weekly_trend
+        }

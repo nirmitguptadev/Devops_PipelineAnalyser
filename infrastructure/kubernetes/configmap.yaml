@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pipeline-analyzer-config
+data:
+  FLASK_ENV: "production"
+  DATABASE_URL: "sqlite:///pipeline_analyzer.db"
