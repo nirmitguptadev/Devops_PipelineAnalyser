@@ -5,9 +5,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+_UNSET = object()
+
+
 class GroqAnalyzer:
-    def __init__(self, api_key: str = None):
-        if not api_key:
+    def __init__(self, api_key: str = _UNSET):
+        if api_key is _UNSET:
             api_key = os.getenv("GROQ_API_KEY")
 
         self.enabled = bool(api_key)

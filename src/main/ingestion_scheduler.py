@@ -10,7 +10,12 @@ logger = logging.getLogger(__name__)
 
 class IngestionScheduler:
     def __init__(
-        self, jenkins_url: str, username: str, api_token: str, poll_interval: int = 10, groq_analyzer=None
+        self,
+        jenkins_url: str,
+        username: str,
+        api_token: str,
+        poll_interval: int = 10,
+        groq_analyzer=None,
     ):
         self.jenkins = JenkinsIntegration(jenkins_url, username, api_token)
         self.analyzer = PipelineAnalyzer()

@@ -10,7 +10,12 @@ logger = logging.getLogger(__name__)
 
 class GithubScheduler:
     def __init__(
-        self, token: str, owner: str = None, repo: str = None, poll_interval: int = 10, groq_analyzer=None
+        self,
+        token: str,
+        owner: str = None,
+        repo: str = None,
+        poll_interval: int = 10,
+        groq_analyzer=None,
     ):
         self.github = GitHubActionsIntegration(token, owner, repo)
         self.analyzer = PipelineAnalyzer()
