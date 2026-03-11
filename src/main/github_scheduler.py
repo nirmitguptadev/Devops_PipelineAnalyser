@@ -1,48 +1,44 @@
 import threading
 import time
 import logging
-from jenkins_integration import JenkinsIntegration
+from github_integration import GitHubActionsIntegration
 from analyzer import PipelineAnalyzer
 from database import Database
 
 logger = logging.getLogger(__name__)
 
 
-class IngestionScheduler:
+class GithubScheduler:
     def __init__(
-        self, jenkins_url: str, username: str, api_token: str, poll_interval: int = 10, groq_analyzer=None
+        self, token: str, owner: str = None, repo: str = None, poll_interval: int = 10, groq_analyzer=None
     ):
-        self.jenkins = JenkinsIntegration(jenkins_url, username, api_token)
+        self.github = GitHubActionsIntegration(token, owner, repo)
         self.analyzer = PipelineAnalyzer()
         self.db = Database()
         self.poll_interval = poll_interval
         self.groq_analyzer = groq_analyzer
         self.running = False
         self.thread = None
-
-        # Store the exact time the scheduler was initialized
-        # Only fetch Jenkins builds that fail AFTER the application boot
-        from datetime import datetime, timezone
-
-        self.startup_time = int(datetime.now(timezone.utc).timestamp() * 1000)
+        self.owner = owner
+        self.repo = repo
 
     def start(self):
         """Start the background polling thread"""
         if self.running:
-            logger.warning("Scheduler already running")
+            logger.warning("GitHub Scheduler already running")
             return
 
         self.running = True
         self.thread = threading.Thread(target=self._poll_loop, daemon=True)
         self.thread.start()
-        logger.info(f"Started Jenkins polling every {self.poll_interval} seconds")
+        logger.info(f"Started GitHub polling every {self.poll_interval} seconds")
 
     def stop(self):
         """Stop the background polling thread"""
         self.running = False
         if self.thread:
             self.thread.join(timeout=5)
-        logger.info("Stopped Jenkins polling")
+        logger.info("Stopped GitHub polling")
 
     def _poll_loop(self):
         """Main polling loop"""
@@ -50,52 +46,55 @@ class IngestionScheduler:
             try:
                 self._poll_and_analyze()
             except Exception as e:
-                logger.error(f"Error in polling loop: {e}")
+                logger.error(f"Error in GitHub polling loop: {e}")
 
             time.sleep(self.poll_interval)
 
     def _poll_and_analyze(self):
-        """Poll Jenkins and analyze failed builds"""
-        logger.info("Starting Jenkins poll...")
+        """Poll GitHub Actions and analyze failed runs"""
+        logger.info("Starting GitHub Actions poll...")
 
         try:
-            failed_builds = self.jenkins.poll_all_jobs(limit_per_job=5)
+            repos_to_poll = []
+            if self.owner and self.repo:
+                repos_to_poll.append({"owner": self.owner, "name": self.repo})
+            else:
+                repos_to_poll = self.github.list_repositories(self.owner)
 
-            if not failed_builds:
-                logger.info("No failed builds found")
+            if not repos_to_poll:
+                logger.warning("No GitHub repositories found or unable to list.")
+                return
+
+            failed_runs = self.github.poll_all_repos(repos_to_poll, limit_per_repo=5)
+
+            if not failed_runs:
+                logger.info("No failed GitHub runs found")
                 return
 
             analyzed_count = 0
-            for build in failed_builds:
+            for run in failed_runs:
                 try:
-                    # Ignore historical builds - only analyze failures that occur AFTER the dashboard spins up
-                    if build.get("timestamp", 0) < self.startup_time:
-                        continue
+                    pipeline_name = f"{run['job_name']}#{run['build_number']}"
 
                     # Check if already analyzed
-                    if self.db.is_build_analyzed(
-                        build["job_name"], build["build_number"]
-                    ):
-                        logger.debug(
-                            f"Skipping already analyzed: {build['job_name']}#{build['build_number']}"
-                        )
+                    if self.db.is_build_analyzed(run["job_name"], run["build_number"]):
+                        logger.debug(f"Skipping already analyzed: {pipeline_name}")
                         continue
 
                     # Analyze the build
-                    pipeline_name = f"{build['job_name']}#{build['build_number']}"
-                    result = self.analyzer.analyze(build["console_log"], pipeline_name)
+                    result = self.analyzer.analyze(run["console_log"], pipeline_name)
 
                     # Add build metadata
-                    result["build_number"] = build["build_number"]
-                    result["jenkins_status"] = build["result"]
-                    result["ci_platform"] = "jenkins"
+                    result["build_number"] = run["build_number"]
+                    result["jenkins_status"] = run["result"]  # keep structure similar
+                    result["ci_platform"] = "github"
 
                     # Add AI insights if available
                     try:
                         groq = self.groq_analyzer
                         if groq and groq.enabled:
                             ai_result = groq.analyze_failure(
-                                build["console_log"],
+                                run["console_log"],
                                 result["category"],
                                 result["error_lines"],
                             )
@@ -116,18 +115,20 @@ class IngestionScheduler:
                     )
                 except Exception as e:
                     logger.error(
-                        f"Error analyzing build {build.get('job_name', 'unknown')}: {e}"
+                        f"Error analyzing GitHub run {run.get('job_name', 'unknown')}: {e}"
                     )
                     continue
 
             if analyzed_count > 0:
-                logger.info(f"🎉 Poll complete. Analyzed {analyzed_count} new builds")
+                logger.info(
+                    f"🎉 Poll complete. Analyzed {analyzed_count} new GitHub runs"
+                )
             else:
-                logger.info("Poll complete. No new builds to analyze")
+                logger.info("Poll complete. No new GitHub runs to analyze")
         except Exception as e:
-            logger.error(f"Error in poll and analyze: {e}")
+            logger.error(f"Error in GitHub poll and analyze: {e}")
 
     def poll_now(self):
         """Trigger immediate poll (for manual testing)"""
-        logger.info("Manual poll triggered")
+        logger.info("Manual GitHub poll triggered")
         self._poll_and_analyze()

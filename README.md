@@ -1,7 +1,7 @@
 # Pipeline Failure Analyzer
 
-Student Name: [Your Name]  
-Registration No: [Your Registration Number]  
+Student Name: Nirmit Gupt  
+Registration No: 23FE10CSE00802  
 Course: CSE3253 DevOps [PE6]  
 Semester: VI (2025-2026)  
 Project Type: Jenkins & CI/CD  
@@ -110,7 +110,7 @@ python src/main/app.py
 3. **Processing**: App fetches logs and analyzes
 4. **Storage**: Immediate storage and dashboard update
 
-See [Jenkins Integration Guide](docs/jenkins-integration.md) for setup details.
+See the **Local CI/CD Pipeline Setup** section below for setup details.
 
 ---
 
@@ -167,6 +167,28 @@ kubectl get pods,svc,deploy
 | Test Coverage | > 80% | 85% |
 | Deployment Frequency | Daily | 2x/day |
 | Mean Time to Recovery | < 1 hour | 45 min |
+
+---
+
+## Local CI/CD Pipeline Setup (Windows + Docker)
+
+To run the automated `Jenkinsfile` pipeline on a Windows machine with Docker Desktop:
+
+1. **Jenkins Requirements**: Ensure Jenkins is running on your Windows machine.
+2. **Docker Setup**: Ensure Docker Desktop is running in the background.
+3. **Create Jenkins Pipeline**:
+   - Open your Jenkins Dashboard.
+   - Click **New Item** -> Select **Pipeline** -> Name it (e.g., `pipeline-analyzer-build`) -> Click **OK**.
+4. **Configure Pipeline**:
+   - Scroll down to the **Pipeline** section.
+   - Definition: `Pipeline script from SCM`
+   - SCM: `Git`
+   - Repository URL: `https://github.com/nirmitguptadev/Devops_PipelineAnalyser.git`
+   - Branch Specifier: `*/main`
+   - Script Path: `pipelines/Jenkinsfile`
+5. **Run the Pipeline**:
+   - Click **Save** and then **Build Now**.
+   - Jenkins will automatically checkout the code, install dependencies in a virtual environment, run code quality checks (`pylint`, `black`, `bandit`), run the `pytest` suite, build the Docker Container, and deploy it locally to port `5000`.
 
 ---
 

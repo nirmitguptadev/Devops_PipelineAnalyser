@@ -1,0 +1,329 @@
+WARNING:groq_analyzer:Groq API key not found. AI analysis disabled.
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every 30 seconds
+INFO:__main__:Jenkins auto-ingestion enabled from settings
+INFO:__main__:GitHub integration not configured.
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+INFO:werkzeug:Press CTRL+C to quit
+INFO:werkzeug: * Restarting with stat
+WARNING:groq_analyzer:Groq API key not found. AI analysis disabled.
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every 30 seconds
+INFO:__main__:Jenkins auto-ingestion enabled from settings
+INFO:__main__:GitHub integration not configured.
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 127-560-847
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:07] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:07] "GET /static/app.js HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:07] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:07] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:07] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /settings HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /static/settings.js HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /api/settings HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /api/settings/github/status HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:12] "GET /api/settings/groq/status HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:22] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:27] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:27] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:27] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:31] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:32] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:46:34] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:48:49] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:48:53] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:48:53] "GET /static/app.js HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:48:53] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:48:53] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:03] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:13] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:23] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:23] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:23] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:33] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:43] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /settings HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /static/settings.js HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /api/settings HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /api/settings/github/status HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:53] "GET /api/settings/groq/status HTTP/1.1" 200 -
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:49:56] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Jenkins HTTP error: 401 - Check credentials
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:02] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Jenkins HTTP error: 401 - Check credentials
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:04] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+ERROR:jenkins_integration:Jenkins HTTP error: 401 - Check credentials
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:10] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:49] "POST /api/settings/jenkins/test HTTP/1.1" 200 -
+INFO:settings_manager:Settings saved successfully
+INFO:settings_manager:Settings saved successfully
+INFO:settings_manager:Settings saved successfully
+INFO:settings_manager:Settings saved successfully
+INFO:settings_manager:Settings saved successfully
+INFO:settings_manager:Settings saved successfully
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:55] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:55] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-50:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:57] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:57] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-52:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-54:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-56:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:58] "GET /api/settings/jenkins/status HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-58:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:59] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:59] "GET /static/app.js HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:59] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:50:59] "GET /api/stats HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Stopped Jenkins polling
+INFO:ingestion_scheduler:Starting Jenkins poll...
+INFO:ingestion_scheduler:Started Jenkins polling every None seconds
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:00] "POST /api/settings/jenkins HTTP/1.1" 200 -
+INFO:jenkins_integration:Polling 4 Jenkins jobs...
+INFO:jenkins_integration:Found 3 failed builds in Freestyle_CI_Job
+INFO:jenkins_integration:Found 3 failed builds in Pipeline-Analyzer-Build
+INFO:jenkins_integration:Found 5 failed builds in testing
+INFO:ingestion_scheduler:Poll complete. No new builds to analyze
+Exception in thread Thread-64:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/app/src/main/ingestion_scheduler.py", line 54, in _poll_loop
+    time.sleep(self.poll_interval)
+TypeError: an integer is required (got type NoneType)
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:09] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:19] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:29] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:29] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:29] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:39] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:49] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:59] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:59] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:51:59] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:09] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:19] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:29] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:29] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:29] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:39] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:49] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:59] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:59] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:52:59] "GET /api/stats HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:53:09] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:53:19] "GET /api/failures?limit=1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:53:29] "GET /api/failures?limit=10 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Mar/2026 20:53:29] "GET /api/stats HTTP/1.1" 200 -
+INFO:ingestion_scheduler:Starting Jenkins poll...
+ERROR:jenkins_integration:Cannot connect to Jenkins at http://localhost:8080: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: /api/json?tree=jobs%5Bname%5D (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8080): Failed to establish a new connection: [Errno 111] Connection refused"))
+WARNING:jenkins_integration:No Jenkins jobs found or unable to connect
+INFO:ingestion_scheduler:No failed builds found
