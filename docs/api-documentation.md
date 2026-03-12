@@ -5,6 +5,9 @@
 http://localhost:5000/api
 ```
 
+## Authentication
+No authentication required for local development.
+
 ## Endpoints
 
 ### 1. Analyze Pipeline Log
@@ -17,7 +20,9 @@ http://localhost:5000/api
 ```json
 {
   "pipeline_name": "my-ci-pipeline",
-  "log_content": "BUILD FAILED: compilation error in Main.java"
+  "log_content": "BUILD FAILED: compilation error in Main.java",
+  "ci_platform": "jenkins",
+  "use_ai": true
 }
 ```
 
@@ -34,7 +39,9 @@ http://localhost:5000/api
     "Verify build configuration files",
     "Ensure all dependencies are available"
   ],
-  "severity": "high"
+  "severity": "high",
+  "ai_insights": "The compilation error suggests missing imports or syntax issues",
+  "troubleshooting": ["Check Java version", "Verify classpath"]
 }
 ```
 
@@ -56,6 +63,7 @@ http://localhost:5000/api
     "timestamp": "2025-01-15T10:30:00.000Z",
     "category": "build_failure",
     "severity": "high",
+    "ci_platform": "jenkins",
     "created_at": "2025-01-15T10:30:00.000Z"
   }
 ]
@@ -82,31 +90,41 @@ http://localhost:5000/api
     "high": 50,
     "medium": 60,
     "low": 20
+  },
+  "by_platform": {
+    "jenkins": 100,
+    "github_actions": 50
   }
 }
 ```
 
-### 4. Health Check
+### 4. Settings Management
+
+**Get Settings:** `GET /api/settings`
+**Jenkins Config:** `POST /api/settings/jenkins`
+**GitHub Config:** `POST /api/settings/github`
+**Test Connections:** `POST /api/settings/jenkins/test`
+
+### 5. Webhook Endpoints
+
+**Jenkins:** `POST /api/webhook/jenkins`
+**GitHub:** `POST /api/webhook/github`
+
+### 6. Health Check
 
 **Endpoint:** `GET /api/health`
-
-**Description:** Health check endpoint for monitoring.
 
 **Response:**
 ```json
 {
   "status": "healthy",
-  "timestamp": "2025-01-15T10:30:00.000Z"
+  "timestamp": "2025-01-15T10:30:00.000Z",
+  "jenkins_integration": true,
+  "github_integration": false
 }
 ```
 
 ## Error Responses
-
-All endpoints return standard HTTP status codes:
-
-- `200 OK`: Successful request
-- `400 Bad Request`: Invalid input
-- `500 Internal Server Error`: Server error
 
 **Error Response Format:**
 ```json
@@ -115,8 +133,7 @@ All endpoints return standard HTTP status codes:
 }
 ```
 
-## Rate Limiting
-
-Currently no rate limiting is implemented. Future versions will include:
-- 100 requests per minute per IP
-- 1000 requests per hour per IP
+**HTTP Status Codes:**
+- `200 OK`: Successful request
+- `400 Bad Request`: Invalid input
+- `500 Internal Server Error`: Server error

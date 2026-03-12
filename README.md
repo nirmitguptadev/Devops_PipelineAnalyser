@@ -36,60 +36,72 @@ DevOps teams struggle to quickly identify root causes of pipeline failures acros
 ### Core Technologies
 - Programming Language: Python 3.9+
 - Framework: Flask 2.3
-- Database: SQLite (dev), PostgreSQL (prod)
+- Database: SQLite
 - Frontend: HTML5, Bootstrap 5, Chart.js
+- AI Analysis: Groq API
 
 ### DevOps Tools
 - Version Control: Git
 - CI/CD: Jenkins, GitHub Actions
 - Containerization: Docker
-- Orchestration: Kubernetes
-- Configuration Management: Puppet
-- Testing: Selenium, pytest
-- Monitoring: Nagios, Prometheus
+- Testing: pytest, Selenium
+- Code Quality: pylint, black, bandit
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- [x] Docker Desktop v20.10+
-- [x] Git 2.30+
-- [x] Python 3.9+
-- [x] Jenkins 2.400+ (optional, for auto-ingestion)
-- [x] kubectl (for K8s deployment)
+- Python 3.9+
+- Git
+- Docker Desktop (optional)
+- Jenkins (optional, for auto-ingestion)
+- GitHub Personal Access Token (optional, for GitHub integration)
 
-### Installation
+### Quick Start (Recommended)
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/[username]/devops-project-pipeline-failure-analyzer.git
-   cd devops-project-pipeline-failure-analyzer
+   git clone https://github.com/nirmitguptadev/Devops_PipelineAnalyser.git
+   cd Devops_PipelineAnalyser
    ```
 
-2. Configure Jenkins Integration (Optional):
+2. **Install dependencies:**
    ```bash
-   cp .env.example .env
-   # Edit .env and add your Jenkins credentials
+   pip install -r requirements.txt
    ```
 
-3. Build and run using Docker:
+3. **Run the application:**
    ```bash
-   cd infrastructure/docker
-   docker-compose up --build
+   python src/main/app.py
    ```
 
-4. Access the application:
+4. **Access the application:**
    - Web Interface: http://localhost:5000
    - API: http://localhost:5000/api
 
-### Alternative Installation (Without Docker)
+### Docker Installation (Optional)
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python src/main/app.py
+cd infrastructure/docker
+docker-compose up --build
+```
+
+### Configuration (Optional)
+
+For Jenkins/GitHub auto-ingestion, configure via the Settings page in the web interface or create a `.env` file:
+
+```bash
+# Jenkins Integration (Optional)
+JENKINS_URL=http://your-jenkins:8080
+JENKINS_USER=your-username
+JENKINS_TOKEN=your-api-token
+
+# GitHub Integration (Optional)
+GITHUB_TOKEN=your-github-token
+
+# Groq AI (Optional - for enhanced analysis)
+GROQ_API_KEY=your-groq-api-key
 ```
 
 ## How It Works
@@ -143,19 +155,17 @@ pytest --cov=src --cov-report=html
 
 ---
 
-## Docker & Kubernetes
+## Docker Deployment
 
-### Docker Images
+### Build and Run
 ```bash
-docker build -t pipeline-analyzer:latest .
-docker run -p 5000:5000 pipeline-analyzer:latest
+cd infrastructure/docker
+docker-compose up --build
 ```
 
-### Kubernetes Deployment
-```bash
-kubectl apply -f infrastructure/kubernetes/
-kubectl get pods,svc,deploy
-```
+### Access Application
+- Web Interface: http://localhost:5000
+- API Documentation: http://localhost:5000/api
 
 ---
 
@@ -170,25 +180,30 @@ kubectl get pods,svc,deploy
 
 ---
 
-## Local CI/CD Pipeline Setup (Windows + Docker)
+## Usage
 
-To run the automated `Jenkinsfile` pipeline on a Windows machine with Docker Desktop:
+### Manual Log Analysis
+1. Open http://localhost:5000
+2. Paste your pipeline logs in the text area
+3. Click "Analyze" to get categorized failure analysis
+4. View recommendations and root cause analysis
 
-1. **Jenkins Requirements**: Ensure Jenkins is running on your Windows machine.
-2. **Docker Setup**: Ensure Docker Desktop is running in the background.
-3. **Create Jenkins Pipeline**:
-   - Open your Jenkins Dashboard.
-   - Click **New Item** -> Select **Pipeline** -> Name it (e.g., `pipeline-analyzer-build`) -> Click **OK**.
-4. **Configure Pipeline**:
-   - Scroll down to the **Pipeline** section.
-   - Definition: `Pipeline script from SCM`
-   - SCM: `Git`
-   - Repository URL: `https://github.com/nirmitguptadev/Devops_PipelineAnalyser.git`
-   - Branch Specifier: `*/main`
-   - Script Path: `pipelines/Jenkinsfile`
-5. **Run the Pipeline**:
-   - Click **Save** and then **Build Now**.
-   - Jenkins will automatically checkout the code, install dependencies in a virtual environment, run code quality checks (`pylint`, `black`, `bandit`), run the `pytest` suite, build the Docker Container, and deploy it locally to port `5000`.
+### Auto-Ingestion Setup
+1. Go to Settings page in the web interface
+2. Configure Jenkins or GitHub integration
+3. Enable auto-polling to automatically analyze failed builds
+4. View results in the dashboard
+
+### API Usage
+```bash
+# Analyze logs via API
+curl -X POST http://localhost:5000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"pipeline_name": "my-pipeline", "log_content": "BUILD FAILED: compilation error"}'
+
+# Get failure statistics
+curl http://localhost:5000/api/stats
+```
 
 ---
 
