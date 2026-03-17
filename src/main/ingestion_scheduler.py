@@ -25,11 +25,8 @@ class IngestionScheduler:
         self.running = False
         self.thread = None
 
-        # Store the exact time the scheduler was initialized
-        # Only fetch Jenkins builds that fail AFTER the application boot
-        from datetime import datetime, timezone
-
-        self.startup_time = int(datetime.now(timezone.utc).timestamp() * 1000)
+        # Track already-analyzed builds in memory to avoid re-processing on each poll
+        self.analyzed_this_session = set()
 
     def start(self):
         """Start the background polling thread"""
@@ -73,10 +70,6 @@ class IngestionScheduler:
             analyzed_count = 0
             for build in failed_builds:
                 try:
-                    # Ignore historical builds - only analyze failures that occur AFTER the dashboard spins up
-                    if build.get("timestamp", 0) < self.startup_time:
-                        continue
-
                     # Check if already analyzed
                     if self.db.is_build_analyzed(
                         build["job_name"], build["build_number"]

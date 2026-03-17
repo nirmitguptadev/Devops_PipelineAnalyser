@@ -49,7 +49,7 @@ class Database:
         cursor.execute(
             """
             SELECT COUNT(*) FROM failures 
-            WHERE pipeline_name = ?
+            WHERE pipeline_name = ? AND timestamp > datetime('now', '-7 days')
         """,
             (result["pipeline_name"],),
         )
