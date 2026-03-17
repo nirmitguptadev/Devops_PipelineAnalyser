@@ -58,8 +58,7 @@ pipeline {
             steps {
                 bat "docker stop pipeline-analyzer-staging || exit 0"
                 bat "docker rm pipeline-analyzer-staging || exit 0"
-                bat "docker run -d -p 5001:5000 --name pipeline-analyzer-staging -e GROQ_API_KEY=%GROQ_API_KEY% %DOCKER_IMAGE%:latest"
-                bat "docker cp settings.json pipeline-analyzer-staging:/app/settings.json"
+                bat "docker run -d -p 5001:5000 --name pipeline-analyzer-staging -e GROQ_API_KEY=%GROQ_API_KEY% -v %CD%\\settings.json:/app/settings.json %DOCKER_IMAGE%:latest"
             }
         }
         
@@ -68,8 +67,7 @@ pipeline {
                 input message: 'Deploy to Production?', ok: 'Deploy'
                 bat "docker stop pipeline-analyzer-prod || exit 0"
                 bat "docker rm pipeline-analyzer-prod || exit 0"
-                bat "docker run -d -p 5000:5000 --name pipeline-analyzer-prod -e GROQ_API_KEY=%GROQ_API_KEY% %DOCKER_IMAGE%:latest"
-                bat "docker cp settings.json pipeline-analyzer-prod:/app/settings.json"
+                bat "docker run -d -p 5000:5000 --name pipeline-analyzer-prod -e GROQ_API_KEY=%GROQ_API_KEY% -v %CD%\\settings.json:/app/settings.json %DOCKER_IMAGE%:latest"
             }
         }
     }

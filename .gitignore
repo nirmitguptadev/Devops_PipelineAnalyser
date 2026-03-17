@@ -57,3 +57,17 @@ temp/
 htmlcov/
 .coverage
 .pytest_cache/
+
+# Secrets and credentials
+settings.json
+debug.json
+
+# Runtime / temp files
+temp_logs.txt
+full_logs.txt
+*.log
+datetime
+job*.log
+
+# Old/scratch files
+old_jenkins.txt

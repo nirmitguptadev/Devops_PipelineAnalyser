@@ -10,7 +10,6 @@ COPY src/ ./src/
 
 # Copy configuration files (the * ignores if they are missing locally)
 COPY settings.json* .
-COPY .env* .
 
 EXPOSE 5000
 

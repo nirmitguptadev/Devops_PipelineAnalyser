@@ -12,15 +12,36 @@ class SettingsManager:
         self.settings = self._load_settings()
 
     def _load_settings(self) -> Dict:
-        """Load settings from file"""
+        """Load settings from file, falling back to environment variables"""
+        settings = {}
         if os.path.exists(self.settings_file):
             try:
                 with open(self.settings_file, "r") as f:
-                    return json.load(f)
+                    settings = json.load(f)
             except Exception as e:
                 logger.error(f"Failed to load settings: {e}")
-                return {}
-        return {}
+
+        # Fall back to environment variables if settings file has no credentials
+        jenkins = settings.get("jenkins", {})
+        if not jenkins.get("token") and os.getenv("JENKINS_TOKEN"):
+            settings["jenkins"] = {
+                "url": os.getenv("JENKINS_URL", ""),
+                "user": os.getenv("JENKINS_USER", ""),
+                "token": os.getenv("JENKINS_TOKEN"),
+                "poll_interval": int(os.getenv("POLL_INTERVAL", 300)),
+                "enabled": True,
+            }
+
+        github = settings.get("github", {})
+        if not github.get("token") and os.getenv("GITHUB_TOKEN"):
+            settings["github"] = {
+                "token": os.getenv("GITHUB_TOKEN"),
+                "owner": os.getenv("GITHUB_OWNER", ""),
+                "repo": os.getenv("GITHUB_REPO", ""),
+                "enabled": True,
+            }
+
+        return settings
 
     def _save_settings(self):
         """Save settings to file"""

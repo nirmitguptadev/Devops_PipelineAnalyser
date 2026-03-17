@@ -1,0 +1,15 @@
+{
+  "jenkins": {
+    "url": "http://localhost:8080",
+    "user": "<your-jenkins-username>",
+    "token": "<your-jenkins-api-token>",
+    "poll_interval": 300,
+    "enabled": false
+  },
+  "github": {
+    "token": "<your-github-token>",
+    "owner": "<your-github-username>",
+    "repo": "<your-repo-name>",
+    "enabled": false
+  }
+}

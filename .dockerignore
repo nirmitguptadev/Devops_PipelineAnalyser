@@ -1,0 +1,13 @@
+.env
+settings.json
+*.db
+*.log
+*.txt
+venv/
+venv_panalyser/
+__pycache__/
+.git/
+tests/
+htmlcov/
+.coverage
+debug.json
