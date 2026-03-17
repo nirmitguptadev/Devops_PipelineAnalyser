@@ -2,7 +2,8 @@
 settings.json
 *.db
 *.log
-*.txt
+temp_logs.txt
+full_logs.txt
 venv/
 venv_panalyser/
 __pycache__/
