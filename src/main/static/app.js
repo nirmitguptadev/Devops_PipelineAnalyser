@@ -30,24 +30,19 @@ function startLiveUpdates() {
 // Check for new failures and show in activity feed
 async function checkNewFailures() {
     try {
-        const response = await fetch('/api/failures?limit=1');
+        const response = await fetch(`/api/failures?limit=10&after=${lastFailureId}`);
         const failures = await response.json();
         
         if (failures.length > 0) {
-            const latestFailure = failures[0];
+            // failures are ordered DESC, so first is newest — update cursor
+            lastFailureId = failures[0].id;
             
-            // Check if this is a new failure
-            if (latestFailure.id > lastFailureId) {
-                lastFailureId = latestFailure.id;
-                addToActivityFeed(latestFailure);
-                
-                // Show notification
-                showNotification('New Failure Detected', latestFailure.pipeline_name);
-                
-                // Refresh stats and table
-                loadStats();
-                loadFailures();
-            }
+            // Add each new failure to feed (reverse so oldest-new appears first)
+            failures.slice().reverse().forEach(f => addToActivityFeed(f));
+            
+            showNotification('New Failure Detected', failures[0].pipeline_name);
+            loadStats();
+            loadFailures();
         }
     } catch (error) {
         console.error('Failed to check new failures:', error);
