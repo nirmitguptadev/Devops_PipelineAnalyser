@@ -90,27 +90,18 @@ class Database:
         conn.commit()
         conn.close()
 
-    def get_latest_failure_id(self) -> int:
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute("SELECT COALESCE(MAX(id), 0) FROM failures")
-        result = cursor.fetchone()[0]
-        conn.close()
-        return result
-
-    def get_recent_failures(self, limit: int = 50, after_id: int = 0) -> List[Dict]:
+    def get_recent_failures(self, limit: int = 50) -> List[Dict]:
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         cursor.execute(
             """
-            SELECT * FROM failures
-            WHERE id > ?
+            SELECT * FROM failures 
             ORDER BY created_at DESC 
             LIMIT ?
         """,
-            (after_id, limit),
+            (limit,),
         )
 
         rows = cursor.fetchall()

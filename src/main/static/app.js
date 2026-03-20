@@ -2,20 +2,13 @@
 let categoryChart = null;
 let trendChart = null;
 let currentPlatform = 'jenkins';
-let lastFailureId = null;
+let lastFailureId = 0;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     initializeCIPlatformSelector();
     loadStats();
-    // Always snapshot the current max ID fresh — only show failures inserted after this point
-    try {
-        const res = await fetch('/api/failures/latest-id');
-        const data = await res.json();
-        lastFailureId = data.latest_id;
-    } catch (_) {
-        lastFailureId = 0;
-    }
+    loadFailures();
     startLiveUpdates();
 });
 
@@ -32,15 +25,18 @@ function startLiveUpdates() {
 // Check for new failures and show in activity feed
 async function checkNewFailures() {
     try {
-        const response = await fetch(`/api/failures?limit=10&after=${lastFailureId}`);
+        const response = await fetch('/api/failures?limit=1');
         const failures = await response.json();
         
         if (failures.length > 0) {
-            lastFailureId = failures[0].id;
-            failures.slice().reverse().forEach(f => addToActivityFeed(f));
-            showNotification('New Failure Detected', failures[0].pipeline_name);
-            loadStats();
-            loadFailures();
+            const latestFailure = failures[0];
+            if (latestFailure.id > lastFailureId) {
+                lastFailureId = latestFailure.id;
+                addToActivityFeed(latestFailure);
+                showNotification('New Failure Detected', latestFailure.pipeline_name);
+                loadStats();
+                loadFailures();
+            }
         }
     } catch (error) {
         console.error('Failed to check new failures:', error);
@@ -252,7 +248,7 @@ function showError(message) {
 
 async function loadFailures() {
     try {
-        const response = await fetch(`/api/failures?limit=10&after=${lastFailureId}`);
+        const response = await fetch('/api/failures?limit=10');
         const failures = await response.json();
         
         window.recentFailuresData = failures;

@@ -239,16 +239,10 @@ def analyze_pipeline():
     return jsonify(result)
 
 
-@app.route("/api/failures/latest-id", methods=["GET"])
-def get_latest_failure_id():
-    return jsonify({"latest_id": db.get_latest_failure_id()})
-
-
 @app.route("/api/failures", methods=["GET"])
 def get_failures():
     limit = request.args.get("limit", 50, type=int)
-    after = request.args.get("after", 0, type=int)
-    failures = db.get_recent_failures(limit, after_id=after)
+    failures = db.get_recent_failures(limit)
     return jsonify(failures)
 
 
