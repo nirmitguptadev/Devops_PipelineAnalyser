@@ -8,12 +8,18 @@ let lastFailureId = 0;
 document.addEventListener('DOMContentLoaded', async () => {
     initializeCIPlatformSelector();
     loadStats();
-    // Snapshot the current latest ID so only new failures are shown
-    try {
-        const res = await fetch('/api/failures?limit=1');
-        const data = await res.json();
-        if (data.length > 0) lastFailureId = data[0].id;
-    } catch (_) {}
+    // Use stored baseline if set (reset when Jenkins reconnects), else snapshot current latest
+    const storedBaseline = localStorage.getItem('dashboard_baseline_id');
+    if (storedBaseline !== null) {
+        lastFailureId = parseInt(storedBaseline);
+    } else {
+        try {
+            const res = await fetch('/api/failures?limit=1');
+            const data = await res.json();
+            if (data.length > 0) lastFailureId = data[0].id;
+        } catch (_) {}
+        localStorage.setItem('dashboard_baseline_id', lastFailureId);
+    }
     startLiveUpdates();
 });
 
@@ -36,6 +42,7 @@ async function checkNewFailures() {
         if (failures.length > 0) {
             // failures are ordered DESC, so first is newest — update cursor
             lastFailureId = failures[0].id;
+            localStorage.setItem('dashboard_baseline_id', lastFailureId);
             
             // Add each new failure to feed (reverse so oldest-new appears first)
             failures.slice().reverse().forEach(f => addToActivityFeed(f));

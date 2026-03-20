@@ -103,6 +103,9 @@ document.getElementById('jenkinsForm').addEventListener('submit', async (e) => {
         if (response.ok) {
             showAlert('jenkinsTestResult', 'success', 
                 '<i class="fas fa-check-circle"></i> Jenkins integration saved and enabled!');
+            // Mark connection time so dashboard only shows failures from this point
+            localStorage.setItem('jenkins_connected_at', Date.now());
+            localStorage.removeItem('dashboard_baseline_id');
             checkJenkinsStatus();
         } else {
             showAlert('jenkinsTestResult', 'danger', 
