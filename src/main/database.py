@@ -38,6 +38,19 @@ class Database:
         """
         )
 
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS build_stats (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                job_name TEXT NOT NULL,
+                build_number INTEGER NOT NULL,
+                result TEXT NOT NULL,
+                recorded_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(job_name, build_number)
+            )
+        """
+        )
+
         conn.commit()
         conn.close()
 
@@ -47,10 +60,7 @@ class Database:
 
         # Prevent race condition duplicates between webhook & scheduler
         cursor.execute(
-            """
-            SELECT COUNT(*) FROM failures 
-            WHERE pipeline_name = ? AND timestamp > datetime('now', '-7 days')
-        """,
+            "SELECT COUNT(*) FROM failures WHERE pipeline_name = ?",
             (result["pipeline_name"],),
         )
         if cursor.fetchone()[0] > 0:
@@ -80,18 +90,19 @@ class Database:
         conn.commit()
         conn.close()
 
-    def get_recent_failures(self, limit: int = 50) -> List[Dict]:
+    def get_recent_failures(self, limit: int = 50, after_id: int = 0) -> List[Dict]:
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         cursor.execute(
             """
-            SELECT * FROM failures 
+            SELECT * FROM failures
+            WHERE id > ?
             ORDER BY created_at DESC 
             LIMIT ?
         """,
-            (limit,),
+            (after_id, limit),
         )
 
         rows = cursor.fetchall()
@@ -120,6 +131,17 @@ class Database:
         conn.close()
 
         return count > 0
+
+    def record_build(self, job_name: str, build_number: int, result: str):
+        """Record a build seen during polling (for success rate calculation)"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT OR IGNORE INTO build_stats (job_name, build_number, result) VALUES (?, ?, ?)",
+            (job_name, build_number, result),
+        )
+        conn.commit()
+        conn.close()
 
     def get_statistics(self) -> Dict:
         conn = sqlite3.connect(self.db_path)
@@ -160,6 +182,28 @@ class Database:
         )
         weekly_trend = dict(cursor.fetchall())
 
+        # Avg MTTR: average minutes between failure timestamp and analysis (created_at)
+        cursor.execute(
+            """
+            SELECT AVG(
+                (julianday(created_at) - julianday(timestamp)) * 1440
+            ) FROM failures
+            WHERE timestamp IS NOT NULL AND created_at IS NOT NULL
+        """
+        )
+        avg_mttr_minutes = cursor.fetchone()[0]
+
+        # Success rate from build_stats
+        cursor.execute("SELECT COUNT(*) FROM build_stats")
+        total_builds = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM build_stats WHERE result NOT IN ('SUCCESS', 'success')")
+        failed_builds = cursor.fetchone()[0]
+
+        if total_builds > 0:
+            success_rate = round((total_builds - failed_builds) / total_builds * 100, 1)
+        else:
+            success_rate = None
+
         conn.close()
 
         return {
@@ -167,4 +211,6 @@ class Database:
             "by_category": by_category,
             "by_severity": by_severity,
             "weekly_trend": weekly_trend,
+            "avg_mttr_minutes": round(avg_mttr_minutes, 1) if avg_mttr_minutes else None,
+            "success_rate": success_rate,
         }

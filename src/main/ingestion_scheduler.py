@@ -61,7 +61,7 @@ class IngestionScheduler:
         logger.info("Starting Jenkins poll...")
 
         try:
-            failed_builds = self.jenkins.poll_all_jobs(limit_per_job=5)
+            failed_builds = self.jenkins.poll_all_jobs(limit_per_job=5, db=self.db)
 
             if not failed_builds:
                 logger.info("No failed builds found")

@@ -5,10 +5,15 @@ let currentPlatform = 'jenkins';
 let lastFailureId = 0;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     initializeCIPlatformSelector();
     loadStats();
-    loadFailures();
+    // Snapshot the current latest ID so only new failures are shown
+    try {
+        const res = await fetch('/api/failures?limit=1');
+        const data = await res.json();
+        if (data.length > 0) lastFailureId = data[0].id;
+    } catch (_) {}
     startLiveUpdates();
 });
 
@@ -254,7 +259,7 @@ function showError(message) {
 
 async function loadFailures() {
     try {
-        const response = await fetch('/api/failures?limit=10');
+        const response = await fetch(`/api/failures?limit=10&after=${lastFailureId}`);
         const failures = await response.json();
         
         window.recentFailuresData = failures;
@@ -337,8 +342,19 @@ async function loadStats() {
         // Update stat cards
         document.getElementById('totalFailures').textContent = stats.total_failures || 0;
         document.getElementById('criticalCount').textContent = stats.by_severity?.critical || 0;
-        document.getElementById('avgMTTR').textContent = '45m';
-        document.getElementById('successRate').textContent = '85%';
+        
+        if (stats.avg_mttr_minutes != null) {
+            const m = stats.avg_mttr_minutes;
+            document.getElementById('avgMTTR').textContent = m >= 60
+                ? `${Math.floor(m / 60)}h ${Math.round(m % 60)}m`
+                : `${Math.round(m)}m`;
+        } else {
+            document.getElementById('avgMTTR').textContent = 'N/A';
+        }
+        
+        document.getElementById('successRate').textContent = stats.success_rate != null
+            ? `${stats.success_rate}%`
+            : 'N/A';
         
         // Update category chart
         updateCategoryChart(stats.by_category);

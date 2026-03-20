@@ -45,14 +45,19 @@ class JenkinsIntegration:
             )
             return None
 
-    def get_failed_builds(self, job_name: str, limit: int = 10) -> List[Dict]:
+    def get_failed_builds(self, job_name: str, limit: int = 10, db=None) -> List[Dict]:
         """Get only failed builds with their console logs"""
         builds = self.get_job_builds(job_name, limit)
         failed_builds = []
 
         for build in builds:
-            if build.get("result") in ["FAILURE", "UNSTABLE", "ABORTED"]:
-                build_number = build["number"]
+            result = build.get("result")
+            build_number = build["number"]
+
+            if db and result:
+                db.record_build(job_name, build_number, result)
+
+            if result in ["FAILURE", "UNSTABLE", "ABORTED"]:
                 console_log = self.get_build_console_log(job_name, build_number)
 
                 if console_log:
@@ -60,7 +65,7 @@ class JenkinsIntegration:
                         {
                             "job_name": job_name,
                             "build_number": build_number,
-                            "result": build["result"],
+                            "result": result,
                             "timestamp": build["timestamp"],
                             "console_log": console_log,
                         }
@@ -94,7 +99,7 @@ class JenkinsIntegration:
             logger.error(f"Failed to fetch jobs list: {e}")
             return []
 
-    def poll_all_jobs(self, limit_per_job: int = 5) -> List[Dict]:
+    def poll_all_jobs(self, limit_per_job: int = 5, db=None) -> List[Dict]:
         """Poll all jobs and return failed builds"""
         jobs = self.get_all_jobs()
 
@@ -107,7 +112,7 @@ class JenkinsIntegration:
 
         for job_name in jobs:
             try:
-                failed_builds = self.get_failed_builds(job_name, limit_per_job)
+                failed_builds = self.get_failed_builds(job_name, limit_per_job, db=db)
                 all_failed_builds.extend(failed_builds)
                 if failed_builds:
                     logger.info(
