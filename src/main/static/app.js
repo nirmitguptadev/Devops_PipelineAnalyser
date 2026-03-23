@@ -107,6 +107,12 @@ function addToActivityFeed(failure) {
     }
 }
 
+function decodeHTML(str) {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = str;
+    return txt.value;
+}
+
 // Show AI summary in dedicated card
 function showAISummary(failure) {
     const summaryCard = document.getElementById('aiSummaryCard');
@@ -141,13 +147,13 @@ function showAISummary(failure) {
             <div class="analysis-box">
                 ${failure.ai_insights ? `
                     <p class="analysis-section-label">Core Problem</p>
-                    <p class="analysis-problem">${failure.ai_insights}</p>
+                    <p class="analysis-problem">${decodeHTML(failure.ai_insights)}</p>
                 ` : ''}
                 ${troubleshooting.length > 0 ? `
                     <p class="analysis-section-label">How to Fix</p>
                     <ul class="fix-list">
                         ${troubleshooting.map((step, i) => `
-                            <li><span class="step-num">${i + 1}</span><span>${step}</span></li>
+                            <li><span class="step-num">${i + 1}</span><span>${decodeHTML(step)}</span></li>
                         `).join('')}
                     </ul>
                 ` : ''}

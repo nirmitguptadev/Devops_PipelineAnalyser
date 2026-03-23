@@ -31,21 +31,24 @@ class GroqAnalyzer:
             return None
 
         try:
-            prompt = f"""Analyze this CI/CD pipeline failure:
+            prompt = f"""A CI/CD pipeline build failed. Identify the exact mistake in the build commands or scripts.
 
-Category: {category}
-Log (last 2500 chars):
-{log_content[-2500:]}
+Failure category: {category}
 
-Key Error Lines:
+Key error lines (most important — read these first):
 {chr(10).join(error_lines[:20])}
 
-Explain this to a developer in plain, simple language:
-1. CORE PROBLEM: One sentence — what exactly broke and why (e.g. "A required package is missing" or "A test is comparing the wrong value"). No jargon.
-2. HOW TO FIX: 2-3 simple steps to resolve it. Each step should be a direct action (e.g. "Run pip install X", "Change line Y in file Z"). Avoid vague advice.
+Full log (last 2500 chars):
+{log_content[-2500:]}
+
+Rules:
+- If you see a typo, extra space, wrong path, or bad syntax in a command or script name, say that directly.
+- Do NOT say "check the path" or "verify the directory" — say exactly what is wrong and what to change it to.
+- CORE PROBLEM must be one sentence naming the specific command, file, or line that is broken and why.
+- HOW TO FIX steps must be direct edits or commands, not general advice.
 
 Format:
-CORE PROBLEM: [one sentence]
+CORE PROBLEM: [one sentence — name the exact broken thing]
 HOW TO FIX:
 - [step 1]
 - [step 2]
@@ -60,8 +63,8 @@ HOW TO FIX:
                     {"role": "user", "content": prompt},
                 ],
                 model=self.model,
-                temperature=0.2,
-                max_tokens=600,
+                temperature=0.1,
+                max_tokens=400,
             )
 
             content = response.choices[0].message.content.strip()
