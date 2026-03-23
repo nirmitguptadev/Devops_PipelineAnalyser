@@ -67,7 +67,7 @@ pipeline {
                 input message: 'Deploy to Production?', ok: 'Deploy'
                 bat "docker stop pipeline-analyzer-prod || exit 0"
                 bat "docker rm pipeline-analyzer-prod || exit 0"
-                bat "docker run -d -p 5000:5000 --name pipeline-analyzer-prod -e GROQ_API_KEY=%GROQ_API_KEY% -v %CD%\\settings.json:/app/settings.json %DOCKER_IMAGE%:latest"
+                bat "docker run -d -p 5000:5000 --restart always --name pipeline-analyzer-prod -e GROQ_API_KEY=%GROQ_API_KEY% -v %CD%\\settings.json:/app/settings.json %DOCKER_IMAGE%:latest"
             }
         }
     }

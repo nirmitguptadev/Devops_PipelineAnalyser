@@ -132,42 +132,36 @@ function showAISummary(failure) {
     
     if (failure.ai_insights || troubleshooting.length > 0) {
         summaryCard.innerHTML = `
-            <div class="mb-3">
-                <h5 class="mb-2">${failure.pipeline_name}</h5>
+            <div class="d-flex align-items-center gap-2 mb-3">
                 <span class="badge bg-${severityColors[failure.severity]}">${failure.severity}</span>
-                <span class="badge bg-secondary ms-2">${failure.category.replace('_', ' ')}</span>
+                <span class="badge bg-secondary">${failure.category.replace('_', ' ')}</span>
             </div>
-            
-            <div class="ai-summary-box">
-                <div class="ai-summary-title">
-                    <i class="fas fa-brain"></i>
-                    <span>AI Analysis</span>
-                </div>
+            <p class="fw-semibold mb-3" style="font-size:0.95rem;color:#111827;">${failure.pipeline_name}</p>
+
+            <div class="analysis-box">
                 ${failure.ai_insights ? `
-                    <div class="ai-summary-content">${failure.ai_insights}</div>
+                    <p class="analysis-section-label">Core Problem</p>
+                    <p class="analysis-problem">${failure.ai_insights}</p>
                 ` : ''}
-                
                 ${troubleshooting.length > 0 ? `
-                    <div class="troubleshooting-title">
-                        <i class="fas fa-tools"></i> Troubleshooting Steps
-                    </div>
-                    <ol class="troubleshooting-list">
-                        ${troubleshooting.map(step => `<li>${step}</li>`).join('')}
-                    </ol>
+                    <p class="analysis-section-label">How to Fix</p>
+                    <ul class="fix-list">
+                        ${troubleshooting.map((step, i) => `
+                            <li><span class="step-num">${i + 1}</span><span>${step}</span></li>
+                        `).join('')}
+                    </ul>
                 ` : ''}
             </div>
-            
-            <div class="mt-3">
-                <small class="text-muted">
-                    <i class="fas fa-clock"></i> ${new Date(failure.timestamp).toLocaleString()}
-                </small>
-            </div>
+
+            <p class="mt-3 mb-0" style="font-size:0.75rem;color:#9ca3af;">
+                <i class="fas fa-clock me-1"></i>${new Date(failure.timestamp).toLocaleString()}
+            </p>
         `;
     } else {
         summaryCard.innerHTML = `
-            <div class="no-ai-message">
-                <i class="fas fa-info-circle fa-2x mb-3" style="color: #95a5a6;"></i>
-                <p>No AI analysis available for this failure</p>
+            <div class="empty-state">
+                <i class="fas fa-circle-info" style="color:#d1d5db;"></i>
+                <p style="color:#6b7280;">No analysis available for this failure</p>
             </div>
         `;
     }

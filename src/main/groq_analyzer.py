@@ -34,29 +34,28 @@ class GroqAnalyzer:
             prompt = f"""Analyze this CI/CD pipeline failure:
 
 Category: {category}
-Context lines from the log:
+Log (last 2500 chars):
 {log_content[-2500:]}
 
-Error Lines (Filtered Highlights):
+Key Error Lines:
 {chr(10).join(error_lines[:20])}
 
-Provide:
-1. Summary (2-3 sentences explaining exactly what went wrong and where).
-2. Troubleshooting Steps (3-4 specific actionable steps. DO NOT provide generic advice like "check dependencies" or "review logs". State the exact file name, variable, conflicting version, or specific command to run).
+Explain this to a developer in plain, simple language:
+1. CORE PROBLEM: One sentence — what exactly broke and why (e.g. "A required package is missing" or "A test is comparing the wrong value"). No jargon.
+2. HOW TO FIX: 2-3 simple steps to resolve it. Each step should be a direct action (e.g. "Run pip install X", "Change line Y in file Z"). Avoid vague advice.
 
 Format:
-SUMMARY: [your summary]
-TROUBLESHOOTING:
+CORE PROBLEM: [one sentence]
+HOW TO FIX:
 - [step 1]
 - [step 2]
-- [step 3]
-- [step 4]"""
+- [step 3]"""
 
             response = self.client.chat.completions.create(
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a senior DevOps engineer and strict code reviewer. You specialize in pinpointing exact code and resolving CI/CD pipeline failures with actionable commands.",
+                        "content": "You are a helpful assistant that explains CI/CD pipeline failures in simple, plain language that any developer can understand. Avoid technical jargon. Focus on what broke and the simplest way to fix it.",
                     },
                     {"role": "user", "content": prompt},
                 ],
@@ -71,9 +70,9 @@ TROUBLESHOOTING:
             summary = ""
             troubleshooting = []
 
-            if "SUMMARY:" in content:
-                parts = content.split("TROUBLESHOOTING:")
-                summary = parts[0].replace("SUMMARY:", "").strip()
+            if "CORE PROBLEM:" in content:
+                parts = content.split("HOW TO FIX:")
+                summary = parts[0].replace("CORE PROBLEM:", "").strip()
                 if len(parts) > 1:
                     steps = parts[1].strip().split("\n")
                     troubleshooting = [

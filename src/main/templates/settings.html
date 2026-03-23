@@ -3,147 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Pipeline Failure Analyzer</title>
+    <title>Settings — Pipeline Failure Analyzer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
-            background-color: #f8f9fa;
+            background-color: #f0f2f5;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #1a1d23;
         }
-        
+
+        /* ── Navbar ── */
         .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.75rem 1.5rem;
         }
-        
         .navbar-brand {
             font-weight: 700;
-            color: white !important;
+            font-size: 1rem;
+            color: #1a1d23 !important;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
         }
-        
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
-            background: white;
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .navbar-brand .brand-icon {
+            width: 30px;
+            height: 30px;
+            background: #3b82f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            font-weight: 600;
-            border-radius: 12px 12px 0 0 !important;
-            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
         }
-        
+        .btn-sm-nav {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 7px;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: background 0.15s;
+        }
+        .btn-sm-nav:hover { background: #f9fafb; color: #111827; }
+
+        /* ── Cards ── */
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            margin-bottom: 1.25rem;
+            background: #ffffff;
+        }
+        .card-header {
+            background: transparent;
+            border-bottom: 1px solid #e5e7eb;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-header .header-left { display: flex; align-items: center; gap: 0.5rem; }
+        .card-header i { color: #6b7280; font-size: 0.85rem; }
+
+        /* ── Sidebar Nav ── */
+        .side-nav-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
+        }
+        .nav-link {
+            color: #6b7280;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-link:hover { background: #f3f4f6; color: #111827; }
+        .nav-link.active { background: #eff6ff; color: #2563eb; font-weight: 600; }
+        .nav-link i { width: 14px; text-align: center; }
+
+        /* ── Forms ── */
         .form-control, .form-select {
             border-radius: 8px;
-            border: 1px solid #dee2e6;
-            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            padding: 0.6rem 0.875rem;
+            font-size: 0.875rem;
+            color: #111827;
         }
-        
         .form-control:focus, .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
+        .form-label {
+            font-size: 0.8rem;
             font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.35rem;
         }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border: none;
+        .form-text { font-size: 0.78rem; color: #9ca3af; }
+
+        /* ── Buttons ── */
+        .btn {
             border-radius: 8px;
-            padding: 0.75rem 1.5rem;
             font-weight: 600;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            font-size: 0.85rem;
+            padding: 0.55rem 1.1rem;
             border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
         }
-        
+        .btn-primary { background: #3b82f6; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: #16a34a; }
+        .btn-success:hover { background: #15803d; }
+        .btn-danger { background: #dc2626; }
+        .btn-danger:hover { background: #b91c1c; }
+
+        /* ── Status Badges ── */
         .status-badge {
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
         }
-        
-        .status-connected {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #10b981;
-        }
-        
-        .status-disconnected {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #ef4444;
-        }
-        
-        .nav-link {
-            color: #6c757d;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-            margin-bottom: 0.5rem;
-        }
-        
-        .nav-link:hover {
-            background: #f8f9ff;
-            color: #667eea;
-        }
-        
-        .nav-link.active {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            color: #667eea;
-            font-weight: 600;
-        }
-        
+        .status-connected    { background: #dcfce7; color: #15803d; }
+        .status-disconnected { background: #fee2e2; color: #b91c1c; }
+        .status-checking     { background: #f3f4f6; color: #6b7280; }
+
+        /* ── Alerts ── */
         .alert {
-            border-radius: 12px;
+            border-radius: 10px;
             border: none;
+            font-size: 0.85rem;
         }
-        
-        .form-text {
-            color: #6c757d;
-            font-size: 0.875rem;
+        .alert-info { background: #eff6ff; color: #1e40af; }
+        .alert ol { padding-left: 1.25rem; margin-top: 0.5rem; }
+        .alert li { margin-bottom: 0.25rem; }
+
+        /* ── Page title ── */
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.5rem;
         }
+        .page-title i { color: #6b7280; margin-right: 0.4rem; }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand text-decoration-none">
-                <i class="fas fa-chart-line"></i> Pipeline Failure Analyzer
+            <a href="/" class="navbar-brand">
+                <span class="brand-icon"><i class="fas fa-chart-line"></i></span>
+                Pipeline Failure Analyzer
             </a>
-            <div>
-                <a href="/" class="btn btn-sm btn-outline-light">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-            </div>
+            <a href="/" class="btn-sm-nav">
+                <i class="fas fa-arrow-left"></i> Dashboard
+            </a>
         </div>
     </nav>
 
-    <div class="container py-5">
-        <h2 class="mb-4"><i class="fas fa-cog"></i> Integration Settings</h2>
-        
-        <div class="row">
-            <div class="col-lg-3 mb-4">
+    <div class="container py-4">
+        <p class="page-title"><i class="fas fa-cog"></i> Integration Settings</p>
+
+        <div class="row g-3">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
                 <div class="card">
-                    <div class="card-body">
-                        <h6 class="text-muted mb-3 text-uppercase fw-bold">Configure</h6>
+                    <div class="card-body py-3">
+                        <p class="side-nav-label">Integrations</p>
                         <nav class="nav flex-column">
                             <a class="nav-link active" href="#jenkins-section">
                                 <i class="fab fa-jenkins"></i> Jenkins
@@ -151,30 +205,29 @@
                             <a class="nav-link" href="#github-section">
                                 <i class="fab fa-github"></i> GitHub Actions
                             </a>
-                            <a class="nav-link" href="#ai-section">
-                                <i class="fas fa-brain"></i> AI Features
-                            </a>
                         </nav>
                     </div>
                 </div>
             </div>
 
+            <!-- Content -->
             <div class="col-lg-9">
+
                 <!-- Jenkins Integration -->
                 <div class="card" id="jenkins-section">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
+                    <div class="card-header">
+                        <span class="header-left">
                             <i class="fab fa-jenkins"></i> Jenkins Integration
-                        </div>
-                        <span class="status-badge" id="jenkinsStatus">
-                            <i class="fas fa-circle"></i> Checking...
+                        </span>
+                        <span class="status-badge status-checking" id="jenkinsStatus">
+                            <i class="fas fa-circle" style="font-size:0.5rem;"></i> Checking…
                         </span>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>How to get Jenkins credentials:</strong>
-                            <ol class="mb-0 mt-2">
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-1"></i>
+                            <strong>How to get Jenkins credentials</strong>
+                            <ol class="mb-0">
                                 <li>Open Jenkins → Click your username → Configure</li>
                                 <li>Scroll to "API Token" → Click "Add new Token"</li>
                                 <li>Copy the generated token and paste below</li>
@@ -183,78 +236,65 @@
 
                         <form id="jenkinsForm">
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-link"></i> Jenkins URL
-                                </label>
-                                <input type="url" class="form-control" id="jenkinsUrl" 
+                                <label class="form-label">Jenkins URL</label>
+                                <input type="url" class="form-control" id="jenkinsUrl"
                                        placeholder="http://localhost:8080" required>
-                                <div class="form-text">Your Jenkins server URL</div>
+                                <div class="form-text">Your Jenkins server address</div>
                             </div>
-
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-user"></i> Username
-                                </label>
-                                <input type="text" class="form-control" id="jenkinsUser" 
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="jenkinsUser"
                                        placeholder="your-jenkins-username" required>
                             </div>
-
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-key"></i> API Token
-                                </label>
-                                <input type="password" class="form-control" id="jenkinsToken" 
+                                <label class="form-label">API Token</label>
+                                <input type="password" class="form-control" id="jenkinsToken"
                                        placeholder="Paste your Jenkins API token" required>
-                                <div class="form-text">Token will be stored securely</div>
+                                <div class="form-text">Stored securely on the server</div>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-clock"></i> Poll Interval
-                                </label>
+                            <div class="mb-4">
+                                <label class="form-label">Poll Interval</label>
                                 <select class="form-select" id="jenkinsPollInterval">
-                                    <option value="10" selected>10 seconds</option>
-                                    <option value="30">30 seconds</option>
-                                    <option value="60">1 minute</option>
-                                    <option value="120">2 minutes</option>
-                                    <option value="300">5 minutes</option>
-                                    <option value="600">10 minutes</option>
-                                    <option value="900">15 minutes</option>
+                                    <option value="10" selected>Every 10 seconds</option>
+                                    <option value="30">Every 30 seconds</option>
+                                    <option value="60">Every 1 minute</option>
+                                    <option value="120">Every 2 minutes</option>
+                                    <option value="300">Every 5 minutes</option>
+                                    <option value="600">Every 10 minutes</option>
+                                    <option value="900">Every 15 minutes</option>
                                 </select>
                             </div>
-
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 flex-wrap">
                                 <button type="button" class="btn btn-success" onclick="testJenkinsConnection()">
-                                    <i class="fas fa-plug"></i> Test Connection
+                                    <i class="fas fa-plug me-1"></i> Test Connection
                                 </button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Save & Enable
+                                    <i class="fas fa-save me-1"></i> Save & Enable
                                 </button>
                                 <button type="button" class="btn btn-danger" onclick="disableJenkins()">
-                                    <i class="fas fa-times"></i> Disable
+                                    <i class="fas fa-times me-1"></i> Disable
                                 </button>
                             </div>
                         </form>
-
                         <div id="jenkinsTestResult" class="mt-3"></div>
                     </div>
                 </div>
 
                 <!-- GitHub Actions Integration -->
                 <div class="card" id="github-section">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
+                    <div class="card-header">
+                        <span class="header-left">
                             <i class="fab fa-github"></i> GitHub Actions Integration
-                        </div>
-                        <span class="status-badge" id="githubStatus">
-                            <i class="fas fa-circle"></i> Checking...
+                        </span>
+                        <span class="status-badge status-checking" id="githubStatus">
+                            <i class="fas fa-circle" style="font-size:0.5rem;"></i> Checking…
                         </span>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>How to get GitHub token:</strong>
-                            <ol class="mb-0 mt-2">
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-1"></i>
+                            <strong>How to get a GitHub token</strong>
+                            <ol class="mb-0">
                                 <li>Go to GitHub → Settings → Developer settings → Personal access tokens</li>
                                 <li>Generate new token (classic)</li>
                                 <li>Select scopes: <code>repo</code> and <code>workflow</code></li>
@@ -264,85 +304,38 @@
 
                         <form id="githubForm">
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-key"></i> GitHub Personal Access Token
-                                </label>
-                                <input type="password" class="form-control" id="githubToken" 
+                                <label class="form-label">Personal Access Token</label>
+                                <input type="password" class="form-control" id="githubToken"
                                        placeholder="ghp_xxxxxxxxxxxx" required>
                             </div>
-
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-user"></i> Repository Owner
-                                </label>
-                                <input type="text" class="form-control" id="githubOwner" 
+                                <label class="form-label">Repository Owner</label>
+                                <input type="text" class="form-control" id="githubOwner"
                                        placeholder="your-github-username">
-                                <div class="form-text">Optional: Leave empty to monitor all your repos</div>
+                                <div class="form-text">Optional — leave empty to monitor all your repos</div>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    <i class="fas fa-code-branch"></i> Repository Name
-                                </label>
-                                <input type="text" class="form-control" id="githubRepo" 
+                            <div class="mb-4">
+                                <label class="form-label">Repository Name</label>
+                                <input type="text" class="form-control" id="githubRepo"
                                        placeholder="your-repo-name">
-                                <div class="form-text">Optional: Specific repo to monitor</div>
+                                <div class="form-text">Optional — leave empty to monitor all repos for this owner</div>
                             </div>
-
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 flex-wrap">
                                 <button type="button" class="btn btn-success" onclick="testGitHubConnection()">
-                                    <i class="fas fa-plug"></i> Test Connection
+                                    <i class="fas fa-plug me-1"></i> Test Connection
                                 </button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Save & Enable
+                                    <i class="fas fa-save me-1"></i> Save & Enable
                                 </button>
                                 <button type="button" class="btn btn-danger" onclick="disableGitHub()">
-                                    <i class="fas fa-times"></i> Disable
+                                    <i class="fas fa-times me-1"></i> Disable
                                 </button>
                             </div>
                         </form>
-
                         <div id="githubTestResult" class="mt-3"></div>
                     </div>
                 </div>
 
-                <!-- AI Features -->
-                <div class="card" id="ai-section">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-brain"></i> AI-Powered Analysis
-                        </div>
-                        <span class="status-badge status-connected">
-                            <i class="fas fa-check-circle"></i> Built-in Feature
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-success">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>AI Analysis is a built-in feature!</strong>
-                            <p class="mb-0 mt-2">
-                                This application uses Groq AI to provide intelligent failure analysis.
-                                Simply check the "Use AI-Enhanced Analysis" option when analyzing logs.
-                            </p>
-                        </div>
-
-                        <div class="alert alert-light border">
-                            <strong><i class="fas fa-star text-warning"></i> AI Features:</strong>
-                            <ul class="mb-0 mt-2">
-                                <li>Deep root cause analysis</li>
-                                <li>Intelligent fix recommendations</li>
-                                <li>Prevention strategies</li>
-                                <li>Context-aware insights</li>
-                            </ul>
-                        </div>
-
-                        <div class="alert alert-secondary">
-                            <i class="fas fa-lock"></i>
-                            <strong>Note:</strong> AI configuration is managed by the application administrator.
-                            No additional setup required from users.
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
